@@ -13,7 +13,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 function App() {
-  const [addresses, setAddresses] = useState<string>("");
+  const [addresses, setAddresses] = useState<string>(
+    "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b\n0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c\n0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d"
+  );
   const [merkleRoot, setMerkleRoot] = useState<string>("");
   const [ethAddresses, setEthAddresses] = useState<Array<string>>();
   const [tree, setTree] = useState<Array<Array<`0x${string}`>>>();
@@ -62,8 +64,7 @@ function App() {
     const index = ethAddresses?.indexOf(address ?? "");
     if (index !== -1)
       setTextProof(JSON.stringify(generateProof(tree ?? [], index ?? 0)));
-    else
-      toast.error('Address does not exist in Merkle Tree')
+    else toast.error("Address does not exist in Merkle Tree");
   };
 
   const verifyAddress = () => {
@@ -113,8 +114,9 @@ function App() {
 
         {/* Generate Merkle Root */}
         <div className="grid w-[50%] gap-4 p-5">
+          <Label htmlFor="address">Type your ethereum addresses here(One per Line)</Label>
           <Textarea
-            placeholder="Type your ethereum addresses here(One per Line)"
+            placeholder="Address"
             value={addresses}
             onChange={(e) => setAddresses(e.target.value)}
             cols={1}

@@ -108,30 +108,30 @@ export function verify(leaf: `0x${string}`, proofArray: Array<`0x${string}`>, ro
     return false
 }
 
-const addresses: Array<`0x${string}`> = [
-  '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
-//   '0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c',
-//   '0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',
-//   '0x4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e',
-//   '0x5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f',
-//   '0x6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a',
-//   '0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b',
-//   '0x8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c',
-//   '0x9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d',
-//   '0x0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
-//   '0x1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f',
-//   '0x2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a',
-]
+// const addresses: Array<`0x${string}`> = [
+//   '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
+// //   '0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c',
+// //   '0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',
+// //   '0x4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e',
+// //   '0x5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f',
+// //   '0x6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a',
+// //   '0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b',
+// //   '0x8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c',
+// //   '0x9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d',
+// //   '0x0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
+// //   '0x1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f',
+// //   '0x2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a',
+// ]
 
 // can be sorted too according to openZepplin merkle library
 // const sorted = [...arrayOfAddresses].sort((a,b) => Buffer.from(a.slice(2), 'hex').compare(Buffer.from(b.slice(2), 'hex')))
 
-const tree = createTree(addresses)
+// const tree = createTree(addresses)
 
-console.log('Tree: ', tree)
+// console.log('Tree: ', tree)
 
-const proof = generateProof(tree, 0)
-console.log('Proof: ', proof)
+// const proof = generateProof(tree, 0)
+// console.log('Proof: ', proof)
 
-//@ts-ignore
-console.log('Exists: ', verify(calculateAddressHash(addresses[0] as `0x${string}`), proof, tree[tree.length-1][0]))
+// //@ts-ignore
+// console.log('Exists: ', verify(calculateAddressHash(addresses[0] as `0x${string}`), proof, tree[tree.length-1][0]))
