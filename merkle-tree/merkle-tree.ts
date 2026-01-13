@@ -76,8 +76,9 @@ export function generateProof(tree: Array<Array<`0x${string}`>>, hashIndex: numb
     const siblingLeaf = tree[0][index]
     proofArr.push(siblingLeaf)
 
-        if(index === 0)
-            return proofArr as Array<`0x${string}`>
+    //dont know why i have added this.
+        // if(index === 0)
+        //     return proofArr as Array<`0x${string}`>
  
 
         for(let i = 1; i<tree.length-1; i++){
