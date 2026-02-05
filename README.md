@@ -1,73 +1,114 @@
-# React + TypeScript + Vite
+# Merkle Tree Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for generating, verifying, and managing Merkle trees for Ethereum wallet addresses with cryptographic proof generation and verification capabilities.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Merkle Tree Generation** - Creates complete binary tree from Ethereum addresses
+- **Proof Generation** - Generates cryptographic proofs for address inclusion
+- **Proof Verification** - Verifies if an address belongs to the tree using its proof
+- **Address Validation** - Validates Ethereum wallet address format using ethers.js
+- **JSON Export** - Export proofs in JSON format for on-chain verification
+- **Dark/Light Theme** - Theme support via next-themes
+- **Security** - Implements OpenZeppelin standards (double-hashing of leaves, lexicographic sorting)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React 19, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui (Radix UI)
+- **Cryptography**: ethers.js (keccak256 hashing)
+- **Notifications**: Sonner (toast notifications)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Clone the repository
+git clone <repository-url>
+cd merkle-tree-generator
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Install dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Script | Command | Description |
+|--------|---------|-------------|
+| `npm run dev` | `vite` | Start development server with HMR |
+| `npm run build` | `tsc -b && vite build` | TypeScript compilation + production build |
+| `npm run lint` | `eslint .` | Run ESLint on all files |
+| `npm run preview` | `vite preview` | Preview production build locally |
+
+## Usage
+
+### 1. Generate Merkle Root
+
+Enter Ethereum addresses (one per line) in the textarea and click "Generate Merkle Root". The application will:
+- Validate all addresses
+- Build the Merkle tree
+- Display the root hash
+- Pre-compute proofs for all addresses
+
+### 2. Generate Proof
+
+Enter a specific address to generate its Merkle proof. The proof is output as a JSON array of sibling hashes needed for on-chain verification.
+
+### 3. Verify Address
+
+Enter an address to verify its inclusion in the tree. The application will check if the address belongs to the generated Merkle tree.
+
+## Core Functions
+
+### `createTree(addresses: string[])`
+Constructs a Merkle tree from an array of Ethereum addresses. Returns a 2D array representing the tree layers.
+
+### `generateProof(tree: string[][], hashIndex: number)`
+Generates a Merkle proof for a leaf at the specified index. Returns an array of sibling hashes.
+
+### `verify(leaf: string, proofArray: string[], root: string)`
+Verifies if a leaf belongs to the tree by reconstructing the root from the proof.
+
+## Security Considerations
+
+This implementation follows OpenZeppelin's Merkle tree standards:
+
+- **Double Hashing of Leaves**: Leaf nodes are hashed twice to prevent second preimage attacks
+- **Lexicographic Sorting**: Sibling hashes are sorted before concatenation to prevent swap attacks
+- **32-byte Padding**: Addresses are padded to 32 bytes (Solidity standard)
+- **Odd Node Handling**: Unpaired nodes move up without duplication to avoid known vulnerabilities
+
+## Project Structure
+
 ```
+merkle-tree-generator/
+├── merkle-tree/
+│   └── merkle-tree.ts      # Core Merkle tree implementation
+├── src/
+│   ├── App.tsx             # Main React component
+│   ├── main.tsx            # React entry point
+│   ├── components/ui/      # shadcn/ui components
+│   └── lib/utils.ts        # Utility functions
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
+```
+
+## Use Cases
+
+- Whitelist verification for NFT mints
+- Airdrop eligibility verification
+- Token distribution validation
+- Access control systems
+
+## Author
+
+Monis Azeem
+
+## License
+
+MIT
